@@ -315,7 +315,7 @@ const FREE=8000, SHIP=1500;
 const P=[
  {id:'gloss-iconic',name:'Gloss Iconic',script:'efecto vidrio',price:2000,tag:'MÁS VENDIDO',bg:'var(--lime)',
   desc:'Un brillo transparente que refleja la luz como en las fotos con flash. Liviano, no pegajoso y con ese tono que te lleva directo a 2006.',
-  variants:[{k:'baby',n:'Tono Baby',dot:'#F3EBCB',img:'img/p-gloss-baby.jpg'},{k:'cool',n:'Tono Cool',dot:'#B9D6EA',img:'img/p-gloss-cool.jpg'},{k:'rosa',n:'Tono Rosa',dot:'#F2A9C2',img:'img/p-gloss-rosa.jpg'}],
+  variants:[{k:'baby',n:'Tono Baby',dot:'#B9D6EA',img:'img/p-gloss-cool.jpg'},{k:'cool',n:'Tono Cool',dot:'#F2A9C2',img:'img/p-gloss-rosa.jpg'},{k:'icon',n:'Tono Icon',dot:'#E9A86C',img:'img/p-gloss-naranja.jpg'}],
   extra:[],
   perks:['efecto vidrio','no pegajoso','tono cherry'],
   how:['Aplicalo en el centro del labio.','Esparcilo con el aplicador.','Sumá otra capa para más brillo.']},
@@ -336,7 +336,7 @@ const P=[
   how:['Empezá desde la raíz.','Subí en zigzag.','Sumá una segunda capa.']},
  {id:'kit-rewind',name:'Kit Rewind',script:'los cuatro iconic',price:8000,tag:'KIT',bg:'var(--ink)',
   desc:'Gloss Iconic, Rubor Baby, Paleta Candy y Pestañas de Revista en un neceser dosmilero. Con el kit, el envío te sale gratis.',
-  img:'img/p-kit.jpg',kit:true,extra:['img/p-gloss-baby.jpg','img/p-rubor.jpg','img/p-paleta.jpg','img/p-mascara.jpg'],
+  img:'img/p-kit.jpg',kit:true,extra:['img/p-gloss-cool.jpg','img/p-rubor.jpg','img/p-paleta.jpg','img/p-mascara.jpg'],
   perks:['4 productos','neceser incluido','envío gratis'],
   how:['Base: Rubor Baby en las mejillas.','Ojos: Paleta Candy y Pestañas de Revista.','Final: Gloss Iconic y a la foto.']}
 ];
@@ -364,7 +364,7 @@ function renderCart(){
  $('#cartCount').textContent=count();
  const st=subtotal(),left=Math.max(0,FREE-st),hasKit=cart.some(l=>l.id==='kit-rewind');
  $('#shipBar').innerHTML=(left===0||hasKit)?'¡Tenés envío gratis! ✦':`Te faltan ${money(left)} para el envío gratis`+`<div class="bar"><i style="width:${Math.min(100,st/FREE*100)}%"></i></div>`;
- if(!cart.length){$('#drBody').innerHTML=`<div class="empty"><img src="img/gloss-baby.png" alt=""><p class="script" style="font-size:28px;margin:0">tu carrito está vacío</p><a class="btn solid" href="#tienda" data-close>Ir a la tienda</a></div>`;$('#drFoot').innerHTML='';return;}
+ if(!cart.length){$('#drBody').innerHTML=`<div class="empty"><img src="img/gloss-cool.png" alt=""><p class="script" style="font-size:28px;margin:0">tu carrito está vacío</p><a class="btn solid" href="#tienda" data-close>Ir a la tienda</a></div>`;$('#drFoot').innerHTML='';return;}
  $('#drBody').innerHTML=cart.map((l,i)=>lineHTML(l,i,true)).join('');
  $('#drFoot').innerHTML=`<div class="tot"><span>Subtotal</span><span>${money(st)}</span></div><a class="btn solid" href="#checkout" data-close>Finalizar compra</a><button class="btn ghost" data-close>Seguir comprando</button>`;
 }
@@ -389,7 +389,7 @@ function card(p){const im=imgOf(p);return `<a class="card" href="#producto-${p.i
 function kitArt(small){const s=small?1:1;return `<div class="kit-art" style="max-width:${small?'100%':'520px'}">
  <img src="img/paleta.png" alt="" style="width:46%;left:4%;top:6%;transform:rotate(-8deg)">
  <img src="img/rubor.png" alt="" style="width:40%;right:4%;top:10%;transform:rotate(9deg)">
- <img src="img/gloss-baby.png" alt="" style="width:60%;left:2%;bottom:16%;transform:rotate(-18deg)">
+ <img src="img/gloss-cool.png" alt="" style="width:60%;left:2%;bottom:16%;transform:rotate(-18deg)">
  <img src="img/mascara.png" alt="" style="width:78%;right:0;bottom:8%;transform:rotate(12deg)"></div>`;}
 
 const V={};
