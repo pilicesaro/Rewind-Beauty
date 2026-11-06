@@ -1,0 +1,596 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Rewind Beauty</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;900&family=Inter:wght@400;500;600&family=Bodoni+Moda:ital,wght@1,500;1,700&display=swap">
+<style>
+/* Layout: tienda Y2K de una sola página con vistas por hash; papel crema, tinta bordó, stickers y polaroids */
+:root{
+  --paper:#F8F3EC; --paper-2:#F1E8E0; --ink:#721C34; --ink-soft:#8E4A5E;
+  --pink:#F2A9C2; --pink-hot:#E8679B; --lime:#E9F7A2; --lilac:#A7CDFF; --white:#FFFFFF;
+  --line:rgba(114,28,52,.18);
+  --display:"Poppins",system-ui,sans-serif; --body:"Inter",system-ui,sans-serif;
+  --mono:"Poppins",system-ui,sans-serif; --script:"Bodoni Moda",Georgia,serif;
+  --r:18px; color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{background:var(--paper);color:var(--ink)}
+body{font-family:var(--body);font-size:16px;line-height:1.55;margin:0;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--pink-hot);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:900;letter-spacing:-.03em;line-height:.95;margin:0;text-wrap:balance}
+.script{font-family:var(--script);font-style:italic;font-weight:500;letter-spacing:-.01em}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+
+/* barra superior */
+.promo{background:var(--ink);color:var(--lime);overflow:hidden;white-space:nowrap}
+.promo .track{display:inline-flex;gap:40px;padding-block:8px;animation:marq 28s linear infinite;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.14em}
+@keyframes marq{to{transform:translateX(-50%)}}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1.5px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.nav .logo img{height:42px;width:auto;display:block}
+.nav .links{display:flex;gap:26px;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.nav .links a{text-decoration:none;padding:4px 0;border-bottom:2px solid transparent}
+.nav .links a[aria-current="page"],.nav .links a:hover{border-color:var(--ink)}
+.cartbtn{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--paper);border:0;border-radius:99px;padding:10px 16px;font-family:var(--mono);font-weight:700;font-size:13px}
+.cartbtn .n{background:var(--lime);color:var(--ink);border-radius:99px;min-width:22px;height:22px;display:inline-grid;place-items:center;font-size:12px}
+.burger{display:none;background:none;border:1.5px solid var(--ink);border-radius:99px;padding:8px 12px;font-family:var(--mono);font-weight:700;font-size:12px}
+@media (max-width:760px){.nav .links{display:none}.burger{display:inline-block}.nav .logo img{height:34px}
+  .nav .links.open{display:flex;position:absolute;left:0;right:0;top:100%;flex-direction:column;gap:0;background:var(--paper);border-bottom:1.5px solid var(--line);padding:8px max(16px,env(safe-area-inset-left,0px))}
+  .nav .links.open a{padding:14px 0;border-bottom:1px solid var(--line)}}
+
+/* botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:99px;padding:15px 26px;font-family:var(--display);font-weight:700;font-size:16px;text-decoration:none;border:2px solid var(--ink);transition:transform .15s ease, box-shadow .15s ease}
+.btn.solid{background:var(--ink);color:var(--paper);box-shadow:4px 4px 0 var(--pink)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.lime{background:var(--lime);color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.btn:hover{transform:translate(-2px,-2px)}
+.btn.solid:hover{box-shadow:6px 6px 0 var(--pink)}
+.btn.lime:hover{box-shadow:6px 6px 0 var(--ink)}
+.btn[disabled]{opacity:.45;pointer-events:none}
+
+/* stickers y polaroids */
+.polaroid{background:var(--white);padding:12px 12px 52px;box-shadow:0 14px 30px rgba(114,28,52,.18);position:relative}
+.polaroid img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+.polaroid figcaption{position:absolute;left:16px;bottom:12px;font-family:var(--script);font-style:italic;font-size:20px}
+.tape{position:absolute;width:110px;height:32px;background:repeating-linear-gradient(0deg,var(--pink) 0 8px,var(--white) 8px 16px);opacity:.9;z-index:2}
+.burst{display:grid;place-items:center;text-align:center;background:var(--lime);color:var(--ink);font-family:var(--display);font-weight:900;line-height:1;clip-path:polygon(50% 0,58% 12%,72% 5%,74% 20%,90% 18%,85% 32%,100% 38%,89% 50%,100% 62%,85% 68%,90% 82%,74% 80%,72% 95%,58% 88%,50% 100%,42% 88%,28% 95%,26% 80%,10% 82%,15% 68%,0 62%,11% 50%,0 38%,15% 32%,10% 18%,26% 20%,28% 5%,42% 12%)}
+.spark{position:absolute;width:28px;height:28px;background:var(--ink);clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%)}
+
+/* hero */
+.hero{padding-block:48px 64px;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(56px,9vw,128px)}
+.hero h1 .script{display:block;font-size:.62em;font-weight:500;letter-spacing:-.02em;color:var(--pink-hot);margin-bottom:-.05em}
+.hero p.lead{font-size:19px;max-width:30ch;margin:22px 0 28px;color:var(--ink-soft)}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:14px}
+.hero-art{position:relative;min-height:520px}
+.hero-art .p1{position:absolute;width:62%;right:6%;top:0;transform:rotate(5deg)}
+.hero-art .p2{position:absolute;width:48%;left:0;top:42%;transform:rotate(-6deg)}
+.hero-art .s1{position:absolute;width:52%;right:-2%;bottom:0;transform:rotate(-7deg);border:10px solid var(--white);aspect-ratio:4/3;object-fit:cover;box-shadow:0 14px 30px rgba(114,28,52,.22)}
+.hero-art .burst{position:absolute;width:120px;height:120px;left:6%;top:6%;font-size:18px;transform:rotate(-10deg)}
+.hero-art .tape{left:50%;top:-12px;transform:rotate(-8deg)}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr}.hero-art{min-height:420px;max-width:440px;margin:0 auto;width:100%}}
+
+/* secciones */
+section.block{padding-block:72px}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:32px}
+.sec-head h2{font-size:clamp(40px,6vw,72px)}
+.sec-head h2 .script{color:var(--pink-hot);font-weight:500}
+.band{background:var(--ink);color:var(--paper)}
+.band.pink{background:var(--pink);color:var(--ink)}
+.band.lilac{background:var(--lilac);color:var(--ink)}
+
+/* grilla de productos */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px}
+.card{background:var(--white);border-radius:var(--r);border:1.5px solid var(--line);display:flex;flex-direction:column;overflow:hidden;text-decoration:none;transition:transform .2s ease, box-shadow .2s ease}
+.card:hover{transform:translateY(-4px) rotate(-.4deg);box-shadow:6px 8px 0 var(--pink)}
+.card .art{aspect-ratio:1/1;position:relative;overflow:hidden}
+.card .art img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
+.card:hover .art img{transform:scale(1.05)}
+.card .tag{position:absolute;top:14px;left:14px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.12em;background:var(--ink);color:var(--paper);padding:5px 10px;border-radius:99px}
+.card .info{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;border-top:1.5px solid var(--line);flex:1}
+.card h3{font-size:22px;letter-spacing:-.02em}
+.card .sub{font-size:14px;color:var(--ink-soft)}
+.card .row{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:10px}
+.price{font-family:var(--display);font-weight:900;font-size:20px;font-variant-numeric:tabular-nums}
+.mini-add{border:0;background:var(--pink);color:var(--ink);font-family:var(--mono);font-weight:700;font-size:12px;border-radius:99px;padding:8px 12px}
+.mini-add:hover{background:var(--ink);color:var(--paper)}
+
+/* kit */
+.kit{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.kit-art{position:relative;aspect-ratio:1/1;max-width:520px;width:100%;margin:0 auto}
+.kit-art img{position:absolute;filter:drop-shadow(0 12px 14px rgba(0,0,0,.25))}
+.kit h2{font-size:clamp(44px,6vw,80px)}
+.kit h2 .script{color:var(--lime);font-weight:500}
+.kit ul{list-style:none;padding:0;margin:20px 0 28px;display:grid;gap:8px;font-family:var(--mono);font-size:14px}
+.kit ul li::before{content:"✦ ";color:var(--lime)}
+.strike{text-decoration:line-through;opacity:.6;font-size:18px;margin-right:10px}
+@media (max-width:860px){.kit{grid-template-columns:1fr}}
+
+/* manifiesto */
+.manifesto{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start}
+.manifesto .polaroid:nth-child(1){transform:rotate(-4deg)}
+.manifesto .polaroid:nth-child(2){transform:rotate(3deg) translateY(30px)}
+.manifesto .polaroid:nth-child(3){transform:rotate(-2deg)}
+.quote{font-family:var(--script);font-style:italic;font-size:clamp(28px,4vw,48px);line-height:1.1;max-width:22ch;margin:0 auto 48px;text-align:center}
+@media (max-width:760px){.manifesto{grid-template-columns:1fr 1fr}.manifesto .polaroid:nth-child(3){display:none}}
+
+/* pasos de compra */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.step{background:var(--white);border-radius:var(--r);padding:24px;border:1.5px solid var(--line)}
+.step .num{width:46px;height:46px;border-radius:50%;background:var(--ink);color:var(--pink);display:grid;place-items:center;font-family:var(--display);font-weight:900;margin-bottom:14px}
+.step h3{font-size:22px;margin-bottom:6px}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
+
+/* ficha de producto */
+.pdp{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;padding-block:40px 72px}
+.crumbs{font-family:var(--mono);font-size:12px;letter-spacing:.08em;padding-top:24px}
+.crumbs a{text-decoration:none;opacity:.7}
+.gallery{display:grid;gap:14px;position:relative;min-width:0}
+.slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;border-radius:var(--r);aspect-ratio:1/1;scrollbar-width:none;background:var(--paper-2)}
+.slider::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:start;height:100%}
+.slide img{width:100%;height:100%;object-fit:cover;display:block}
+.arrow{position:absolute;top:calc(50% - 60px);width:46px;height:46px;border-radius:50%;border:2px solid var(--ink);background:var(--paper);font-size:22px;font-weight:700;display:grid;place-items:center;box-shadow:3px 3px 0 var(--pink)}
+.arrow.prev{left:12px}.arrow.next{right:12px}
+.count{position:absolute;top:14px;right:14px;background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:12px;font-weight:700;padding:5px 11px;border-radius:99px}
+.gallery .thumbs{grid-template-columns:repeat(4,1fr)!important}
+.gallery .main{border-radius:var(--r);aspect-ratio:1/1;display:grid;place-items:center;padding:48px;position:relative;overflow:hidden}
+.gallery .main img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 18px 20px rgba(114,28,52,.22))}
+.gallery .main img.wide{transform:rotate(-28deg);width:105%;max-height:none}
+.gallery .thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.gallery .thumbs button{border:2px solid transparent;border-radius:12px;padding:0;overflow:hidden;aspect-ratio:1/1;background:var(--paper-2);display:grid;place-items:center}
+.gallery .thumbs button[aria-pressed="true"]{border-color:var(--ink)}
+.gallery .thumbs img{width:100%;height:100%;object-fit:cover}
+.gallery .thumbs img.contain{object-fit:contain;padding:10px}
+.pdp h1{font-size:clamp(44px,5.5vw,72px)}
+.pdp h1 .script{display:block;font-weight:500;color:var(--pink-hot);font-size:.55em;margin-top:6px}
+.pdp .price{font-size:32px;margin:18px 0 6px}
+.pdp .desc{font-size:17px;color:var(--ink-soft);max-width:46ch}
+.opt-label{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin:24px 0 10px}
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:10px;border:2px solid var(--line);background:var(--white);border-radius:99px;padding:8px 16px 8px 8px;font-weight:600}
+.chip .dot{width:26px;height:26px;border-radius:50%;border:1.5px solid rgba(0,0,0,.12)}
+.chip[aria-pressed="true"]{border-color:var(--ink);box-shadow:3px 3px 0 var(--pink)}
+.buy{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.qty{display:inline-flex;align-items:center;border:2px solid var(--ink);border-radius:99px;overflow:hidden}
+.qty button{background:none;border:0;width:44px;height:50px;font-size:20px;font-weight:700}
+.qty span{min-width:30px;text-align:center;font-family:var(--mono);font-weight:700;font-variant-numeric:tabular-nums}
+.perks{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.perk{font-family:var(--mono);font-size:12px;font-weight:700;background:var(--lime);border-radius:99px;padding:7px 12px}
+details.acc{border-top:1.5px solid var(--line);padding-block:16px}
+details.acc:last-of-type{border-bottom:1.5px solid var(--line)}
+details.acc summary{cursor:pointer;font-family:var(--display);font-weight:700;font-size:18px;list-style:none;display:flex;justify-content:space-between}
+details.acc summary::after{content:"+";font-family:var(--mono)}
+details.acc[open] summary::after{content:"–"}
+details.acc ol,details.acc ul{margin:12px 0 0;padding-left:22px;display:grid;gap:6px}
+@media (max-width:860px){.pdp{grid-template-columns:1fr;gap:28px}}
+
+/* carrito */
+.scrim{position:fixed;inset:0;background:rgba(60,10,25,.4);z-index:80;opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.on{opacity:1;pointer-events:auto}
+aside.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--paper);z-index:90;transform:translateX(100%);transition:transform .28s ease;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-right:env(safe-area-inset-right,0px);border-left:2px solid var(--ink)}
+aside.drawer.on{transform:none}
+.dr-head{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1.5px solid var(--line)}
+.dr-head h2{font-size:30px}
+.x{background:none;border:1.5px solid var(--ink);border-radius:99px;width:38px;height:38px;font-size:18px}
+.ship-bar{padding:14px 20px;background:var(--pink);font-family:var(--mono);font-size:12px;font-weight:700}
+.ship-bar .bar{height:8px;background:rgba(255,255,255,.6);border-radius:99px;margin-top:8px;overflow:hidden}
+.ship-bar .bar i{display:block;height:100%;background:var(--ink);border-radius:99px;transition:width .3s}
+.dr-body{flex:1;overflow:auto;padding:8px 20px}
+.line{display:grid;grid-template-columns:72px 1fr auto;gap:14px;align-items:center;padding-block:14px;border-bottom:1px solid var(--line)}
+.line .th{width:72px;height:72px;border-radius:12px;overflow:hidden}
+.line .th img{width:100%;height:100%;object-fit:cover;display:block}
+.line .nm{font-weight:600;line-height:1.25}
+.line .vr{font-size:13px;color:var(--ink-soft)}
+.line .qty{border-width:1.5px;margin-top:6px}
+.line .qty button{width:30px;height:30px;font-size:16px}
+.line .rm{background:none;border:0;font-family:var(--mono);font-size:11px;text-decoration:underline;opacity:.7;padding:0;margin-top:6px}
+.dr-foot{padding:18px 20px;border-top:1.5px solid var(--line);display:grid;gap:12px}
+.tot{display:flex;justify-content:space-between;font-family:var(--display);font-weight:900;font-size:22px;font-variant-numeric:tabular-nums}
+.empty{text-align:center;padding:48px 10px;display:grid;gap:14px;justify-items:center}
+.empty img{width:160px;transform:rotate(-8deg)}
+
+/* checkout */
+.co{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;padding-block:32px 80px;align-items:start}
+.co h1{font-size:clamp(44px,6vw,72px);margin-bottom:8px}
+.co fieldset{border:0;padding:0;margin:28px 0 0;display:grid;gap:14px}
+.co legend{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.co legend b{width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--pink);display:inline-grid;place-items:center;font-family:var(--display)}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:grid;gap:6px}
+.field label{font-size:14px;font-weight:600}
+.field input,.field select{font:inherit;color:var(--ink);background:var(--white);border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;width:100%}
+.field input:focus,.field select:focus{border-color:var(--ink);outline:none;box-shadow:0 0 0 3px var(--pink)}
+.field .err{font-size:13px;color:#B0123A;min-height:0}
+.radio{display:flex;gap:12px;align-items:center;background:var(--white);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;cursor:pointer}
+.radio:has(input:checked){border-color:var(--ink);box-shadow:3px 3px 0 var(--pink)}
+.radio input{accent-color:var(--ink);width:18px;height:18px}
+.radio .r-t{font-weight:600}
+.radio .r-s{font-size:13px;color:var(--ink-soft)}
+.radio .r-p{margin-left:auto;font-family:var(--mono);font-weight:700;font-variant-numeric:tabular-nums}
+.note{font-size:13px;background:var(--lime);border-radius:12px;padding:12px 14px;font-family:var(--mono)}
+.summary{position:sticky;top:96px;background:var(--white);border:2px solid var(--ink);border-radius:var(--r);padding:22px;box-shadow:6px 6px 0 var(--pink)}
+.summary h2{font-size:26px;margin-bottom:8px}
+.summary .rowx{display:flex;justify-content:space-between;font-size:15px;padding-block:6px;font-variant-numeric:tabular-nums}
+.summary .line{grid-template-columns:56px 1fr auto}
+.summary .line .th{width:56px;height:56px}
+@media (max-width:860px){.co{grid-template-columns:1fr}.summary{position:static}.f2{grid-template-columns:1fr}}
+
+/* ticket de confirmación */
+.thanks{padding-block:48px 90px;display:grid;justify-items:center;text-align:center;gap:18px}
+.thanks h1{font-size:clamp(48px,8vw,104px)}
+.thanks h1 .script{display:block;color:var(--pink-hot);font-weight:500;font-size:.5em}
+.ticket{background:var(--white);width:min(420px,100%);padding:28px 26px 36px;font-family:var(--mono);font-size:14px;text-align:left;position:relative;box-shadow:0 18px 30px rgba(114,28,52,.15);transform:rotate(-1.5deg);
+  -webkit-mask:radial-gradient(circle 9px at 50% 100%,transparent 98%,#000) 0 100%/22px 100% repeat-x;mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/22px 100%}
+.ticket img{width:150px;display:block;margin:0 auto 10px}
+.ticket .dash{border-top:2px dashed var(--line);margin:12px 0}
+.ticket .r{display:flex;justify-content:space-between;gap:10px;font-variant-numeric:tabular-nums}
+.ticket .big{font-weight:700;font-size:18px}
+.barcode{height:56px;margin-top:16px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 7px,transparent 7px 9px,var(--ink) 9px 10px,transparent 10px 13px)}
+
+/* nosotras / faq */
+.about-hero{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;padding-block:48px 72px}
+.about-hero h1{font-size:clamp(56px,8vw,112px)}
+.about-hero p{font-size:18px;max-width:44ch;color:var(--ink-soft)}
+.values{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.value{border-radius:var(--r);padding:22px;min-height:170px;display:flex;flex-direction:column;justify-content:space-between}
+.value h3{font-size:24px}
+@media (max-width:860px){.about-hero{grid-template-columns:1fr}.values{grid-template-columns:1fr 1fr}}
+.faq{max-width:760px}
+
+/* footer */
+footer{background:var(--ink);color:var(--paper);padding-block:56px 32px}
+.ft{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
+.ft h4{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin:0 0 12px;color:var(--pink)}
+.ft a{display:block;text-decoration:none;padding-block:4px;opacity:.9}
+.ft a:hover{opacity:1;text-decoration:underline}
+.ft .big{font-family:var(--display);font-weight:900;font-size:clamp(40px,6vw,72px);line-height:.9;letter-spacing:-.03em}
+.ft .big .script{color:var(--lime);font-weight:500}
+.news{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.news input{flex:1;min-width:180px;font:inherit;border-radius:99px;border:0;padding:12px 16px;color:var(--ink);background:var(--paper)}
+.news button{border:0;background:var(--lime);color:var(--ink);border-radius:99px;padding:12px 18px;font-family:var(--mono);font-weight:700}
+.legal{margin-top:40px;padding-top:18px;border-top:1px solid rgba(248,243,236,.2);font-family:var(--mono);font-size:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;opacity:.8}
+@media (max-width:760px){.ft{grid-template-columns:1fr}}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,calc(100% + 60px));visibility:hidden;background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:99px;font-family:var(--mono);font-size:13px;font-weight:700;z-index:100;transition:transform .25s ease;box-shadow:4px 4px 0 var(--pink)}
+.toast.on{transform:translate(-50%,0);visibility:visible}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="promo" aria-hidden="true"><div class="track" id="promo"></div></div>
+<header class="top">
+  <div class="wrap nav">
+    <a class="logo" href="#inicio" aria-label="Rewind Beauty, inicio"><img src="img/logo.png" alt="rewind beauty"></a>
+    <nav class="links" id="links" aria-label="Principal">
+      <a href="#tienda" data-nav="tienda">Tienda</a>
+      <a href="#kit" data-nav="kit">Kit</a>
+      <a href="#nosotras" data-nav="nosotras">Nosotras</a>
+      <a href="#ayuda" data-nav="ayuda">Ayuda</a>
+    </nav>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="links">MENÚ</button>
+      <button class="cartbtn" id="openCart" aria-label="Abrir carrito">CARRITO <span class="n" id="cartCount">0</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer>
+  <div class="wrap">
+    <div class="ft">
+      <div>
+        <div class="big">rebobiná<br><span class="script">tu glow.</span></div>
+        <form class="news" id="news">
+          <label for="newsMail" class="eyebrow" style="width:100%;color:var(--pink)">Novedades y lanzamientos</label>
+          <input id="newsMail" type="email" placeholder="tu mail" required>
+          <button type="submit">SUMARME</button>
+        </form>
+        <p id="newsMsg" class="mono" style="font-size:12px;margin:10px 0 0" hidden></p>
+      </div>
+      <div><h4>Tienda</h4><a href="#tienda">Todos los productos</a><a href="#producto-gloss-iconic">Gloss Iconic</a><a href="#producto-rubor-baby">Rubor Baby</a><a href="#producto-paleta-candy">Paleta Candy</a><a href="#producto-pestanas-de-revista">Pestañas de Revista</a></div>
+      <div><h4>Rewind</h4><a href="#nosotras">Nosotras</a><a href="#ayuda">Envíos y preguntas</a><a href="https://www.instagram.com/rewind.beauty/" target="_blank" rel="noopener">Instagram @rewind.beauty</a></div>
+    </div>
+    <div class="legal"><span>© 2026 Rewind Beauty · La Plata, Buenos Aires</span><span>Sitio de demostración: no se realizan ventas ni cobros reales.</span></div>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Carrito" aria-hidden="true">
+  <div class="dr-head"><h2>Tu carrito</h2><button class="x" id="closeCart" aria-label="Cerrar carrito">✕</button></div>
+  <div class="ship-bar" id="shipBar"></div>
+  <div class="dr-body" id="drBody"></div>
+  <div class="dr-foot" id="drFoot"></div>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const FREE=8000, SHIP=1500;
+const P=[
+ {id:'gloss-iconic',name:'Gloss Iconic',script:'efecto vidrio',price:2000,tag:'MÁS VENDIDO',bg:'var(--lime)',
+  desc:'Un brillo transparente que refleja la luz como en las fotos con flash. Liviano, no pegajoso y con ese tono que te lleva directo a 2006.',
+  variants:[{k:'baby',n:'Tono Baby',dot:'#F3EBCB',img:'img/p-gloss-baby.jpg'},{k:'cool',n:'Tono Cool',dot:'#B9D6EA',img:'img/p-gloss-cool.jpg'}],
+  extra:[],
+  perks:['efecto vidrio','no pegajoso','tono cherry'],
+  how:['Aplicalo en el centro del labio.','Esparcilo con el aplicador.','Sumá otra capa para más brillo.']},
+ {id:'rubor-baby',name:'Rubor Baby',script:'un toque y listo',price:2000,tag:'NUEVO',bg:'var(--pink)',
+  desc:'Rubor cremoso que se difumina con los dedos. Un toque y tenés mejillas de foto de cumpleaños de 15.',
+  img:'img/p-rubor.jpg',extra:[],
+  perks:['textura cremosa','se difumina con los dedos','un toque y listo'],
+  how:['Un toque en la yema del dedo.','Aplicalo en el pómulo.','Difuminá hacia arriba.']},
+ {id:'paleta-candy',name:'Paleta Candy',script:'todo en una',price:2000,tag:'HOT',bg:'var(--lilac)',
+  desc:'Seis sombras, dos rubores y un espejito para retocarte donde estés. La paleta que hubieras querido tener en la mochila.',
+  img:'img/p-paleta.jpg',extra:[],
+  perks:['6 sombras','2 rubores','1 espejito'],
+  how:['Tono claro en todo el párpado.','Color intenso en el pliegue.','Brillo en el centro del ojo.']},
+ {id:'pestanas-de-revista',name:'Pestañas de Revista',script:'mirada de tapa',price:2000,tag:'',bg:'var(--paper-2)',
+  desc:'Máscara que alarga y separa sin grumos. Negro intenso que no se corre, ni con los ataques de risa.',
+  img:'img/p-mascara.jpg',extra:[],
+  perks:['alarga y separa','no se corre','negro intenso'],
+  how:['Empezá desde la raíz.','Subí en zigzag.','Sumá una segunda capa.']},
+ {id:'kit-rewind',name:'Kit Rewind',script:'los cuatro iconic',price:8000,tag:'KIT',bg:'var(--ink)',
+  desc:'Gloss Iconic, Rubor Baby, Paleta Candy y Pestañas de Revista en un neceser dosmilero. Con el kit, el envío te sale gratis.',
+  img:'img/p-kit.jpg',kit:true,extra:['img/p-gloss-baby.jpg','img/p-rubor.jpg','img/p-paleta.jpg','img/p-mascara.jpg'],
+  perks:['4 productos','neceser incluido','envío gratis'],
+  how:['Base: Rubor Baby en las mejillas.','Ojos: Paleta Candy y Pestañas de Revista.','Final: Gloss Iconic y a la foto.']}
+];
+const $=s=>document.querySelector(s);
+const money=n=>'$'+n.toLocaleString('es-AR');
+const byId=id=>P.find(p=>p.id===id);
+const imgOf=(p,vk)=>p.variants?(p.variants.find(v=>v.k===vk)||p.variants[0]).img:p.img;
+
+/* carrito con guardado local opcional */
+let cart=[];
+try{cart=JSON.parse(localStorage.getItem('rb-cart')||'[]')}catch(e){cart=[]}
+const save=()=>{try{localStorage.setItem('rb-cart',JSON.stringify(cart))}catch(e){}};
+const subtotal=()=>cart.reduce((s,l)=>s+byId(l.id).price*l.q,0);
+const count=()=>cart.reduce((s,l)=>s+l.q,0);
+function add(id,vk,q=1){const p=byId(id);vk=vk||(p.variants?p.variants[0].k:'');const l=cart.find(x=>x.id===id&&x.v===vk);if(l)l.q+=q;else cart.push({id,v:vk,q});save();renderCart();toast(`Sumaste ${p.name} ♡`);}
+function setQ(i,q){if(q<=0)cart.splice(i,1);else cart[i].q=q;save();renderCart();if(location.hash==='#checkout')render();}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),1800);}
+
+function lineHTML(l,i,editable){const p=byId(l.id);const v=p.variants?p.variants.find(x=>x.k===l.v):null;
+ return `<div class="line"><div class="th" style="background:${p.kit?'var(--pink)':p.bg}"><img src="${imgOf(p,l.v)}" alt=""></div>
+ <div><div class="nm">${p.name}</div><div class="vr">${v?v.n:p.script}${editable?'':' · x'+l.q}</div>
+ ${editable?`<div class="qty"><button aria-label="Restar" data-q="${i}" data-d="-1">−</button><span>${l.q}</span><button aria-label="Sumar" data-q="${i}" data-d="1">+</button></div><br><button class="rm" data-rm="${i}">Quitar</button>`:''}</div>
+ <div class="price" style="font-size:16px">${money(p.price*l.q)}</div></div>`;}
+function renderCart(){
+ $('#cartCount').textContent=count();
+ const st=subtotal(),left=Math.max(0,FREE-st),hasKit=cart.some(l=>l.id==='kit-rewind');
+ $('#shipBar').innerHTML=(left===0||hasKit)?'¡Tenés envío gratis! ✦':`Te faltan ${money(left)} para el envío gratis`+`<div class="bar"><i style="width:${Math.min(100,st/FREE*100)}%"></i></div>`;
+ if(!cart.length){$('#drBody').innerHTML=`<div class="empty"><img src="img/gloss-baby.png" alt=""><p class="script" style="font-size:28px;margin:0">tu carrito está vacío</p><a class="btn solid" href="#tienda" data-close>Ir a la tienda</a></div>`;$('#drFoot').innerHTML='';return;}
+ $('#drBody').innerHTML=cart.map((l,i)=>lineHTML(l,i,true)).join('');
+ $('#drFoot').innerHTML=`<div class="tot"><span>Subtotal</span><span>${money(st)}</span></div><a class="btn solid" href="#checkout" data-close>Finalizar compra</a><button class="btn ghost" data-close>Seguir comprando</button>`;
+}
+function openCart(o){$('#drawer').classList.toggle('on',o);$('#scrim').classList.toggle('on',o);$('#drawer').setAttribute('aria-hidden',!o);}
+document.addEventListener('click',e=>{
+ const q=e.target.closest('[data-q]');if(q){const i=+q.dataset.q;setQ(i,cart[i].q+ +q.dataset.d);return;}
+ const rm=e.target.closest('[data-rm]');if(rm){setQ(+rm.dataset.rm,0);return;}
+ const a=e.target.closest('[data-add]');if(a){e.preventDefault();add(a.dataset.add);return;}
+ if(e.target.closest('[data-close]'))openCart(false);
+});
+$('#openCart').onclick=()=>{renderCart();openCart(true)};$('#closeCart').onclick=()=>openCart(false);$('#scrim').onclick=()=>openCart(false);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')openCart(false)});
+$('#burger').onclick=()=>{const l=$('#links');const o=!l.classList.contains('open');l.classList.toggle('open',o);$('#burger').setAttribute('aria-expanded',o);};
+$('#news').addEventListener('submit',e=>{e.preventDefault();const m=$('#newsMsg');m.hidden=false;m.textContent='¡Gracias! Como esto es una demo, tu mail no se guarda en ningún lado.';e.target.reset();});
+$('#promo').innerHTML=Array(2).fill('ENVÍO GRATIS DESDE $8.000 ✦ REBOBINÁ TU GLOW ✦ NUEVO RUBOR BABY ✦ PEDIDOS POR DM ✦ ').map(s=>`<span>${s}</span><span>${s}</span>`).join('');
+
+/* vistas */
+function card(p){const im=imgOf(p);return `<a class="card" href="#producto-${p.id}"><div class="art" style="background:${p.bg}">${p.tag?`<span class="tag">${p.tag}</span>`:''}
+ <img src="${im}" alt="${p.name}" loading="lazy"></div>
+ <div class="info"><h3>${p.name}</h3><div class="sub script" style="font-size:17px">${p.script}</div>
+ <div class="row"><span class="price">${p.compare?`<span class="strike" style="font-size:14px">${money(p.compare)}</span>`:''}${money(p.price)}</span><button class="mini-add" data-add="${p.id}" aria-label="Sumar ${p.name} al carrito">+ SUMAR</button></div></div></a>`;}
+function kitArt(small){const s=small?1:1;return `<div class="kit-art" style="max-width:${small?'100%':'520px'}">
+ <img src="img/paleta.png" alt="" style="width:46%;left:4%;top:6%;transform:rotate(-8deg)">
+ <img src="img/rubor.png" alt="" style="width:40%;right:4%;top:10%;transform:rotate(9deg)">
+ <img src="img/gloss-baby.png" alt="" style="width:60%;left:2%;bottom:16%;transform:rotate(-18deg)">
+ <img src="img/mascara.png" alt="" style="width:78%;right:0;bottom:8%;transform:rotate(12deg)"></div>`;}
+
+const V={};
+V.inicio=()=>`
+<section class="hero"><div class="wrap hero-grid">
+ <div>
+  <p class="eyebrow">Maquillaje dosmilero · Vol. 01</p>
+  <h1><span class="script">rebobiná</span>tu glow.</h1>
+  <p class="lead">Gloss, rubores y paletas con el brillo de las fotos con flash. Para las que crecieron con el MP3 en la mochila.</p>
+  <div class="ctas"><a class="btn solid" href="#tienda">Ver la tienda</a><a class="btn ghost" href="#kit">Conocer el kit</a></div>
+ </div>
+ <div class="hero-art" aria-hidden="true">
+  <figure class="polaroid p1" style="margin:0"><span class="tape"></span><img src="img/foto-gloss.jpg" alt=""><figcaption>tarde de gloss ♡</figcaption></figure>
+  <figure class="polaroid p2" style="margin:0"><img src="img/foto-amigas.jpg" alt=""><figcaption>nosotras, 2006</figcaption></figure>
+  <img class="s1" src="img/p-gloss-cool.jpg" alt="">
+  <div class="burst">¡NUEVO!<br>$2.000</div>
+  <span class="spark" style="right:2%;top:46%"></span><span class="spark" style="left:44%;bottom:-2%;width:20px;height:20px"></span>
+ </div>
+</div></section>
+<section class="block band pink"><div class="wrap">
+ <div class="sec-head"><h2>Los <span class="script">iconic</span></h2><a class="btn ghost" href="#tienda">Ver todo</a></div>
+ <div class="grid">${P.filter(p=>!p.kit).map(card).join('')}</div>
+</div></section>
+${kitSection()}
+<section class="block"><div class="wrap">
+ <p class="quote">“Las mejores tardes eran con amigas, revistas teen y un gloss compartido.”</p>
+ <div class="manifesto">
+  <figure class="polaroid" style="margin:0"><img src="img/foto-celu.jpg" alt="Chica hablando por un celular de tapita mientras se pone gloss"><figcaption>23:11 ♡</figcaption></figure>
+  <figure class="polaroid" style="margin:0"><img src="img/foto-cama.jpg" alt="Chica acostada sonriendo junto a dos gloss Rewind"><figcaption>glow era</figcaption></figure>
+  <figure class="polaroid" style="margin:0"><img src="img/foto-gloss.jpg" alt="Chica poniéndose gloss acostada con una revista"><figcaption>sweet secrets</figcaption></figure>
+ </div>
+ <div style="text-align:center;margin-top:64px"><a class="btn ghost" href="#nosotras">Conocé nuestra historia</a></div>
+</div></section>
+<section class="block band lilac"><div class="wrap">
+ <div class="sec-head"><h2>Comprar es <span class="script">re fácil</span></h2></div>
+ <div class="steps">
+  <div class="step"><div class="num">1</div><h3>Elegí</h3><p>Sumá tus favoritos al carrito. Con $8.000 o más, el envío es gratis.</p></div>
+  <div class="step"><div class="num">2</div><h3>Pagá</h3><p>Tarjeta de crédito o débito, transferencia o billetera virtual.</p></div>
+  <div class="step"><div class="num">3</div><h3>Recibí</h3><p>Despachamos en 24 a 48 h hábiles a todo el país.</p></div>
+ </div>
+</div></section>`;
+function kitSection(){const k=byId('kit-rewind');return `<section class="block band" id="kit-sec"><div class="wrap kit">
+ <figure class="polaroid" style="margin:0;transform:rotate(-3deg);max-width:540px;width:100%;justify-self:center"><span class="tape" style="left:42%;top:-12px;transform:rotate(-6deg)"></span><img src="img/p-kit.jpg" alt="Neceser transparente con los productos Rewind Beauty" style="aspect-ratio:4/3"><figcaption>el kit completo ♡</figcaption></figure>
+ <div><p class="eyebrow" style="color:var(--pink)">Los cuatro iconic</p><h2>Kit<br><span class="script">rewind</span></h2>
+ <ul><li>Gloss Iconic</li><li>Rubor Baby</li><li>Paleta Candy</li><li>Pestañas de Revista</li><li>Neceser dosmilero de regalo</li></ul>
+ <p class="price" style="font-size:34px;margin:0 0 22px">${k.compare?`<span class="strike">${money(k.compare)}</span>`:''}${money(k.price)}</p>
+ <div style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn lime" data-add="kit-rewind">Sumar el kit</button><a class="btn ghost" style="color:var(--paper);border-color:var(--paper)" href="#producto-kit-rewind">Ver detalle</a></div></div>
+</div></section>`;}
+V.kit=()=>kitSection()+`<section class="block"><div class="wrap"><div class="sec-head"><h2>Por separado</h2></div><div class="grid">${P.filter(p=>!p.kit).map(card).join('')}</div></div></section>`;
+V.tienda=()=>`<section class="block"><div class="wrap">
+ <div class="sec-head"><div><p class="eyebrow">Tienda · ${P.length} productos</p><h2>Todo el <span class="script">glow</span></h2></div></div>
+ <div class="grid">${P.map(card).join('')}</div></div></section>`;
+
+let pdpState={};
+V.producto=id=>{const p=byId(id);if(!p)return V.inicio();
+ const st=pdpState[id]||(pdpState[id]={v:p.variants?p.variants[0].k:'',q:1});
+ const main=imgOf(p,st.v);
+ const imgs=[main,...(p.variants?p.variants.map(v=>v.img).filter(s=>s!==main):[]),...p.extra];
+ return `<div class="wrap"><nav class="crumbs" aria-label="Ruta"><a href="#inicio">Inicio</a> / <a href="#tienda">Tienda</a> / ${p.name}</nav>
+ <div class="pdp">
+  <div class="gallery">
+   <div class="slider" id="slider" tabindex="0" aria-label="Fotos de ${p.name}, deslizá para ver más">${imgs.map((s,i)=>`<div class="slide"><img src="${s}" alt="${p.name}, foto ${i+1} de ${imgs.length}" ${i?'loading="lazy"':''}></div>`).join('')}</div>
+   ${imgs.length>1?`<span class="count" id="count">1 / ${imgs.length}</span>
+   <button class="arrow prev" data-slide="-1" aria-label="Foto anterior">‹</button><button class="arrow next" data-slide="1" aria-label="Foto siguiente">›</button>
+   <div class="thumbs">${imgs.map((s,i)=>`<button aria-pressed="${i===0}" data-go="${i}" aria-label="Ver foto ${i+1}"><img src="${s}" alt=""></button>`).join('')}</div>`:''}
+  </div>
+  <div>
+   ${p.tag?`<p class="eyebrow">${p.tag}</p>`:''}
+   <h1>${p.name}<span class="script">${p.script}</span></h1>
+   <p class="price">${p.compare?`<span class="strike">${money(p.compare)}</span>`:''}${money(p.price)}</p>
+   <p class="mono" style="font-size:13px;margin:0 0 16px">Crédito, débito, transferencia o billetera virtual</p>
+   <p class="desc">${p.desc}</p>
+   ${p.variants?`<p class="opt-label">Tono: ${p.variants.find(v=>v.k===st.v).n}</p><div class="chips">${p.variants.map(v=>`<button class="chip" aria-pressed="${st.v===v.k}" data-var="${v.k}"><span class="dot" style="background:${v.dot}"></span>${v.n}</button>`).join('')}</div>`:''}
+   <div class="buy"><div class="qty"><button data-pq="-1" aria-label="Restar">−</button><span>${st.q}</span><button data-pq="1" aria-label="Sumar">+</button></div>
+   <button class="btn solid" data-buy>Sumar al carrito · ${money(p.price*st.q)}</button></div>
+   <div class="perks">${p.perks.map(x=>`<span class="perk">✦ ${x}</span>`).join('')}</div>
+   <div style="margin-top:28px">
+    <details class="acc" open><summary>Cómo se usa</summary><ol>${p.how.map(h=>`<li>${h}</li>`).join('')}</ol></details>
+    <details class="acc"><summary>Envíos</summary><p style="margin:12px 0 0">Despachamos en 24 a 48 h hábiles. CABA y GBA: 2 a 4 días. Interior: 3 a 7 días. Gratis desde $8.000.</p></details>
+    <details class="acc"><summary>Cambios</summary><p style="margin:12px 0 0">Tenés 30 días para cambiar productos sin abrir. Escribinos por Instagram y lo resolvemos.</p></details>
+   </div>
+  </div>
+ </div></div>
+ <section class="block band pink"><div class="wrap"><div class="sec-head"><h2>Combinalo <span class="script">con</span></h2></div>
+ <div class="grid">${P.filter(x=>x.id!==id&&!x.kit).slice(0,3).map(card).join('')}</div></div></section>`;};
+
+let order=null;
+V.checkout=()=>{if(!cart.length)return `<section class="block"><div class="wrap empty"><img src="img/rubor.png" alt=""><h1 style="font-size:48px">Tu carrito está vacío</h1><a class="btn solid" href="#tienda">Ir a la tienda</a></div></section>`;
+ const st=subtotal(),hasKit=cart.some(l=>l.id==='kit-rewind');const f=window._co||{};const ship=f.ship||'domicilio';
+ const shipCost=ship==='retiro'?0:((st>=FREE||hasKit)?0:SHIP);
+ return `<div class="wrap"><form class="co" id="coForm" novalidate>
+ <div>
+  <p class="crumbs" style="padding-top:0"><a href="#tienda">← Seguir comprando</a></p>
+  <h1>Finalizar <span class="script" style="color:var(--pink-hot);font-weight:500">compra</span></h1>
+  <fieldset><legend><b>1</b> Tus datos</legend>
+   <div class="f2"><div class="field"><label for="nombre">Nombre y apellido</label><input id="nombre" autocomplete="name" value="${f.nombre||''}" required><span class="err"></span></div>
+   <div class="field"><label for="tel">Teléfono</label><input id="tel" type="tel" autocomplete="tel" value="${f.tel||''}" required><span class="err"></span></div></div>
+   <div class="field"><label for="mail">Email</label><input id="mail" type="email" autocomplete="email" value="${f.mail||''}" required><span class="err"></span></div>
+  </fieldset>
+  <fieldset><legend><b>2</b> Entrega</legend>
+   <label class="radio"><input type="radio" name="ship" value="domicilio" ${ship==='domicilio'?'checked':''}><span><span class="r-t">Envío a domicilio</span><br><span class="r-s">2 a 7 días hábiles según tu zona</span></span><span class="r-p">${(st>=FREE||hasKit)?'GRATIS':money(SHIP)}</span></label>
+   <label class="radio"><input type="radio" name="ship" value="retiro" ${ship==='retiro'?'checked':''}><span><span class="r-t">Retiro en punto Rewind</span><br><span class="r-s">La Plata · te avisamos cuando esté listo</span></span><span class="r-p">GRATIS</span></label>
+   <div id="addr" ${ship==='retiro'?'hidden':''} style="display:grid;gap:14px">
+    <div class="field"><label for="dir">Calle y número</label><input id="dir" autocomplete="street-address" value="${f.dir||''}"><span class="err"></span></div>
+    <div class="f2"><div class="field"><label for="ciudad">Ciudad</label><input id="ciudad" autocomplete="address-level2" value="${f.ciudad||''}"><span class="err"></span></div>
+    <div class="field"><label for="cp">Código postal</label><input id="cp" inputmode="numeric" autocomplete="postal-code" value="${f.cp||''}"><span class="err"></span></div></div>
+    <div class="field"><label for="prov">Provincia</label><select id="prov">${['Buenos Aires','CABA','Catamarca','Chaco','Chubut','Córdoba','Corrientes','Entre Ríos','Formosa','Jujuy','La Pampa','La Rioja','Mendoza','Misiones','Neuquén','Río Negro','Salta','San Juan','San Luis','Santa Cruz','Santa Fe','Santiago del Estero','Tierra del Fuego','Tucumán'].map(x=>`<option ${f.prov===x?'selected':''}>${x}</option>`).join('')}</select></div>
+   </div>
+  </fieldset>
+  <fieldset><legend><b>3</b> Pago</legend>
+   ${[['tarjeta','Tarjeta de crédito o débito','Pagás con tu tarjeta'],['transferencia','Transferencia bancaria','Te mandamos los datos por mail'],['billetera','Billetera virtual','Pagás con QR desde tu celu']].map(([v,t,s],i)=>`<label class="radio"><input type="radio" name="pay" value="${v}" ${(f.pay||'tarjeta')===v?'checked':''}><span><span class="r-t">${t}</span><br><span class="r-s">${s}</span></span></label>`).join('')}
+   <p class="note">Este sitio es una demo del proyecto: el pago es simulado y no se pide ningún dato de tarjeta.</p>
+  </fieldset>
+ </div>
+ <aside class="summary"><h2>Tu pedido</h2>
+  ${cart.map((l,i)=>lineHTML(l,i,false)).join('')}
+  <div style="margin-top:12px"><div class="rowx"><span>Subtotal</span><span>${money(st)}</span></div>
+  <div class="rowx"><span>Envío</span><span>${shipCost?money(shipCost):'Gratis'}</span></div>
+  <div class="tot" style="border-top:1.5px solid var(--line);padding-top:12px;margin-top:8px"><span>Total</span><span>${money(st+shipCost)}</span></div></div>
+  <button class="btn solid" type="submit" style="width:100%;margin-top:18px">Confirmar pedido</button>
+  <p class="mono" style="font-size:11px;text-align:center;margin:10px 0 0">Compra simulada · no se cobra nada</p>
+ </aside>
+ </form></div>`;};
+V.gracias=()=>{if(!order)return V.inicio();const o=order;return `<section class="thanks wrap">
+ <p class="eyebrow">Pedido ${o.num}</p>
+ <h1><span class="script">¡gracias por</span>rebobinar!</h1>
+ <p style="max-width:44ch;color:var(--ink-soft);margin:0">${o.nombre.split(' ')[0]}, recibimos tu pedido. En la vida real te llegaría un mail a ${o.mail} con el detalle y el seguimiento.</p>
+ <div class="ticket"><img src="img/logo.png" alt="rewind beauty">
+  <div class="r"><span>ticket n° ${o.num.slice(-4)}</span><span>${o.fecha}</span></div><div class="dash"></div>
+  ${o.lines.map(l=>`<div class="r"><span>${l.q}x ${l.n.toUpperCase()}</span><span>${money(l.t)}</span></div>`).join('')}
+  <div class="r"><span>1x MAIN CHARACTER</span><span>INCLUIDO</span></div>
+  <div class="r"><span>ENVÍO</span><span>${o.ship?money(o.ship):'GRATIS'}</span></div><div class="dash"></div>
+  <div class="r big"><span>TOTAL</span><span>${money(o.total)}</span></div>
+  <div class="r"><span>GLOW</span><span>100%</span></div>
+  <div class="barcode"></div><p style="text-align:center;margin:10px 0 0" class="script">gracias por rebobinar</p></div>
+ <a class="btn solid" href="#tienda" style="margin-top:14px">Seguir comprando</a></section>`;};
+V.nosotras=()=>`<div class="wrap about-hero">
+ <div><p class="eyebrow">Nosotras</p><h1>Hola, somos <span class="script" style="color:var(--pink-hot);font-weight:500">rewind.</span></h1>
+ <p>Rewind Beauty nació para volver a esas tardes de amigas, maquillaje compartido y risas sin filtro. Hacemos maquillaje fácil, con brillo y con el código visual de los 2000: revistas teen, celulares de tapita y cámaras digitales.</p>
+ <p>Queremos que cada vez que te maquilles sientas que rebobinás a tu mejor versión.</p></div>
+ <figure class="polaroid" style="margin:0;transform:rotate(3deg);max-width:440px;justify-self:center"><span class="tape" style="left:40%;top:-12px;transform:rotate(-6deg)"></span><img src="img/foto-amigas.jpg" alt="Dos amigas sonriendo mejilla con mejilla, con gloss rosa"><figcaption>nosotras, siempre ♡</figcaption></figure>
+</div>
+<section class="block band pink"><div class="wrap"><div class="sec-head"><h2>Lo que nos <span class="script">importa</span></h2></div>
+<div class="values">
+ <div class="value" style="background:var(--paper)"><span class="eyebrow">01</span><h3>Nostalgia que se usa hoy</h3></div>
+ <div class="value" style="background:var(--lime)"><span class="eyebrow">02</span><h3>Amistad y complicidad</h3></div>
+ <div class="value" style="background:var(--lilac)"><span class="eyebrow">03</span><h3>Brillo sin filtro</h3></div>
+ <div class="value" style="background:var(--white)"><span class="eyebrow">04</span><h3>Maquillaje fácil</h3></div>
+</div></div></section>`;
+V.ayuda=()=>`<section class="block"><div class="wrap faq">
+ <p class="eyebrow">Ayuda</p><h2 style="font-size:clamp(44px,6vw,72px);margin-bottom:28px">Preguntas <span class="script" style="color:var(--pink-hot);font-weight:500">frecuentes</span></h2>
+ ${[['¿Hacen envíos a todo el país?','Sí. Despachamos en 24 a 48 h hábiles. CABA y GBA tardan de 2 a 4 días y el interior de 3 a 7. El envío es gratis desde $8.000 o con el Kit Rewind.'],
+ ['¿Cómo sigo mi pedido?','Cuando despachamos te mandamos por mail el código de seguimiento.'],
+ ['¿Qué medios de pago aceptan?','Tarjeta de crédito, tarjeta de débito, transferencia y billeteras virtuales.'],
+ ['¿Puedo comprar por mensaje?','Sí. Escribinos por DM a @rewind.beauty y te armamos el pedido a tu medida.'],
+ ['¿El gloss es pegajoso?','No. El Gloss Iconic tiene efecto vidrio y una textura muy liviana.'],
+ ['¿Cómo se aplica el Rubor Baby?','Con los dedos: es cremoso, así que con un toque en el pómulo y unos golpecitos queda difuminado.'],
+ ['¿Qué trae la Paleta Candy?','Seis sombras, dos rubores y un espejito.'],
+ ['¿Puedo cambiar un producto?','Sí, tenés 30 días para cambiar productos sin abrir. Escribinos por Instagram a @rewind.beauty.']].map(([q,a],i)=>`<details class="acc" ${i===0?'open':''}><summary>${q}</summary><p style="margin:12px 0 0">${a}</p></details>`).join('')}
+</div></section>`;
+
+function render(){
+ const h=(location.hash||'#inicio').slice(1);let html,nav=h;
+ if(h.startsWith('producto-')){html=V.producto(h.slice(9));nav='tienda';}
+ else if(V[h])html=V[h]();else{html=V.inicio();nav='inicio';}
+ $('#app').innerHTML=html;
+ document.querySelectorAll('[data-nav]').forEach(a=>{if(a.dataset.nav===nav)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+ $('#links').classList.remove('open');$('#burger').setAttribute('aria-expanded','false');
+ bindView(h);
+}
+function bindView(h){
+ if(h.startsWith('producto-')){const id=h.slice(9),p=byId(id),st=pdpState[id];if(!p)return;
+  const sl=$('#slider'),n=sl.children.length;let cur=0;
+  const go=i=>{cur=(i+n)%n;sl.scrollTo({left:cur*sl.clientWidth,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});};
+  sl.addEventListener('scroll',()=>{if(!$('#count'))return;const i=Math.round(sl.scrollLeft/sl.clientWidth);if(i===cur&&$('#count').textContent.startsWith(i+1+' '))return;cur=i;$('#count').textContent=`${i+1} / ${n}`;document.querySelectorAll('[data-go]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.go===i));},{passive:true});
+  sl.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();go(cur+1)}if(e.key==='ArrowLeft'){e.preventDefault();go(cur-1)}});
+  $('#app').onclick=e=>{const v=e.target.closest('[data-var]');if(v){st.v=v.dataset.var;rerender();return;}
+   const g=e.target.closest('[data-go]');if(g){go(+g.dataset.go);return;}
+   const a=e.target.closest('[data-slide]');if(a){go(cur+ +a.dataset.slide);return;}
+   const pq=e.target.closest('[data-pq]');if(pq){st.q=Math.max(1,st.q+ +pq.dataset.pq);rerender();return;}
+   if(e.target.closest('[data-buy]')){add(id,st.v,st.q);st.q=1;rerender();renderCart();openCart(true);}};
+ } else $('#app').onclick=null;
+ if(h==='checkout'){const form=$('#coForm');if(!form)return;
+  const keep=()=>{window._co={nombre:$('#nombre').value,tel:$('#tel').value,mail:$('#mail').value,dir:$('#dir')?.value,ciudad:$('#ciudad')?.value,cp:$('#cp')?.value,prov:$('#prov')?.value,ship:form.ship.value,pay:form.pay.value};};
+  form.addEventListener('change',e=>{if(e.target.name==='ship'){keep();render();}});
+  form.addEventListener('submit',e=>{e.preventDefault();keep();const f=window._co;let ok=true;
+   const chk=(id,cond,msg)=>{const el=$('#'+id);if(!el)return;const err=el.parentElement.querySelector('.err');if(!cond){ok=false;err.textContent=msg;el.setAttribute('aria-invalid','true');}else{err.textContent='';el.removeAttribute('aria-invalid');}};
+   chk('nombre',f.nombre.trim().length>2,'Escribí tu nombre y apellido.');
+   chk('tel',f.tel.replace(/\D/g,'').length>=8,'Escribí un teléfono con código de área.');
+   chk('mail',/^\S+@\S+\.\S+$/.test(f.mail),'Revisá el mail: falta algo (ej. vos@mail.com).');
+   if(f.ship==='domicilio'){chk('dir',(f.dir||'').trim().length>3,'Escribí calle y número.');chk('ciudad',(f.ciudad||'').trim().length>1,'Escribí tu ciudad.');chk('cp',/^\w{4,8}$/.test((f.cp||'').trim()),'Revisá el código postal.');}
+   if(!ok){form.querySelector('[aria-invalid]')?.focus();return;}
+   const st=subtotal(),hasKit=cart.some(l=>l.id==='kit-rewind');const ship=f.ship==='retiro'?0:((st>=FREE||hasKit)?0:SHIP);
+   const d=new Date();order={num:'REW-2006-'+String(Math.floor(1000+Math.random()*9000)),nombre:f.nombre.trim(),mail:f.mail,fecha:d.toLocaleDateString('es-AR'),ship,total:st+ship,
+    lines:cart.map(l=>{const p=byId(l.id);const v=p.variants?p.variants.find(x=>x.k===l.v).n.replace('Tono ',''):'';return {n:p.name+(v?' '+v:''),q:l.q,t:p.price*l.q};})};
+   cart=[];save();renderCart();location.hash='gracias';});
+ }
+}
+function rerender(){const y=scrollY;render();scrollTo(0,y);}
+window.addEventListener('hashchange',()=>{render();const h=location.hash.slice(1);if(h!=='kit')scrollTo(0,0);else document.getElementById('kit-sec')?.scrollIntoView();});
+renderCart();render();
+</script>
+
+</body></html>
